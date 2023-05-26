@@ -1,16 +1,21 @@
 import javassist.*;
+import sun.misc.Unsafe;
 
+
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class OOMTest {
 
-    // -XX:MaxMetaspaceSize=64m -Xms20m -Xmx20m -Xss128k
+    // -XX:MaxMetaspaceSize=64m -Xms20m -Xmx20m -Xss128k -XX:MaxDirectMemorySize=10M
     static ClassPool cp = ClassPool.getDefault();
-    public static void main(String[] args)  {
+    public static void main(String[] args) throws IllegalAccessException {
 //        heapOOMTest();
-//        stackOOMTest();
+//        stackOverFlowTest();
 //        main(new String[]{"1"});
-        metaSpaceOOM();
+//        metaSpaceOOM();
+        directMemoryOOMTest();
+
     }
     static void metaSpaceOOM(){
         for (int i = 0 ;; i++){
@@ -31,8 +36,18 @@ public class OOMTest {
 
     }
 
-    static void stackOOMTest(){
-        stackOOMTest();
+    static void stackOverFlowTest(){
+        stackOverFlowTest();
     }
+    static void directMemoryOOMTest() throws IllegalAccessException {
+        Field unsafeField = Unsafe.class.getDeclaredFields()[0];
+        unsafeField.setAccessible(true);
+        Unsafe unsafe = (Unsafe) unsafeField.get(null);
+        while (true) {
+            unsafe.allocateMemory(1024*1024);
+        }
+    }
+
+
 
 }
