@@ -9,7 +9,7 @@ public class Allocation {
 
     // -verbose:gc -Xms20M -Xmx20M -Xmn10M -XX:+PrintGCDetails -XX:SurvivorRatio=8
     public static void main(String[] args) {
-        testTenuringThreshold();
+        testTenuringThreshold2();
     }
 
     static void testAllocation(){
@@ -33,5 +33,14 @@ public class Allocation {
         a3 = null;
         a3 = new byte[4 * _1MB];
     }
-
+    // 动态年龄判定：Survivor区所有对象大小超过空间的1/2
+    static void testTenuringThreshold2(){
+        byte[] a1, a2, a3, a4;
+        a1 = new byte[_1MB / 2];
+        a2 = new byte[_1MB / 2];
+        a3 = new byte[4 * _1MB];
+        a4 = new byte[4 * _1MB];
+        a4 = null;
+        a4 = new byte[4 * _1MB];
+    }
 }
