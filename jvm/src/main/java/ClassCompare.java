@@ -1,4 +1,5 @@
-package jvm.src.main.java;
+
+import jvm.src.main.java.Main;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

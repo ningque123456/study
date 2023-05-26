@@ -9,12 +9,16 @@ public class OOMTest {
 
     // -XX:MaxMetaspaceSize=64m -Xms20m -Xmx20m -Xss128k -XX:MaxDirectMemorySize=10M
     static ClassPool cp = ClassPool.getDefault();
-    public static void main(String[] args) throws IllegalAccessException {
+    public static void main(String[] args)  {
 //        heapOOMTest();
 //        stackOverFlowTest();
 //        main(new String[]{"1"});
 //        metaSpaceOOM();
-        directMemoryOOMTest();
+        try {
+            directMemoryOOMTest();
+        } catch (IllegalAccessException e) {
+            System.out.println(e);
+        }
 
     }
     static void metaSpaceOOM(){
